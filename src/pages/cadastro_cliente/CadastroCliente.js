@@ -79,8 +79,6 @@ export default function Home() {
             return;
         }
 
-
-
         var myJson = {
             "nomeCliente": nomeCliente,
             "telefoneCliente": telefoneCliente,
@@ -89,6 +87,23 @@ export default function Home() {
         };
 
         console.log(myJson);
+
+        //inserção no banco de alunos que precisam ser aprovados pela adminstração
+        const insertCliente = async() => {
+            try {
+                const body = myJson;
+                const response = await fetch("http://localhost:5000/clientes", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+                window.location = "/";
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+
+        insertCliente();
     }
 
     return (

@@ -124,6 +124,23 @@ export default function Home() {
         };
 
         console.log(myJson);
+
+        const insertAnimal = async() => {
+            try {
+                const body = myJson;
+                const response = await fetch("http://localhost:5000/animais", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+                window.location = "/";
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+
+        insertAnimal();
+
     }
 
     return (

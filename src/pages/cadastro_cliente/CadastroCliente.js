@@ -1,12 +1,10 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import validator from 'validator';
 
@@ -40,41 +38,41 @@ export default function Home() {
     const classes = useStyles();
 
     function CadastrarCliente() {
-        console.log("Cadastrando...");
+        console.log("Validando...");
         var nomeCliente = document.getElementById("nomeCliente").value;
         var telefoneCliente = document.getElementById("telefoneCliente").value;
         var enderecoCliente = document.getElementById("enderecoCliente").value;
         var cpfCliente = document.getElementById("cpfCliente").value;
 
         //tratamentos
-        if (nomeCliente == "" || telefoneCliente == "" || enderecoCliente == "" || cpfCliente == "") {
+        if (nomeCliente === "" || telefoneCliente === "" || enderecoCliente === "" || cpfCliente === "") {
             alert("Há campos incompletos");
             return;
         };
 
 
-        if (validator.isAlpha(nomeCliente.replace(" ", "")) == false) {
+        if (validator.isAlpha(nomeCliente.replace(" ", "")) === false) {
             alert("nome do cliente está mal formatado");
             return;
         }
 
-        if (validator.isNumeric(telefoneCliente) == false) {
+        if (validator.isNumeric(telefoneCliente) === false) {
             alert("telefone está mal formatado");
             return;
         }
 
 
-        if (validator.contains(cpfCliente, ".") == true) {
+        if (validator.contains(cpfCliente, ".") === true) {
             alert("cpf do cliente está mal formatado");
             return;
         }
 
-        if (validator.isNumeric(cpfCliente) == false) {
+        if (validator.isNumeric(cpfCliente) === false) {
             alert("cpf do cliente está mal formatado");
             return;
         }
 
-        if (cpfCliente.length != 11) {
+        if (cpfCliente.length !== 11) {
             alert("cpf do cliente está mal formatado");
             return;
         }
@@ -87,9 +85,10 @@ export default function Home() {
         };
 
         console.log(myJson);
-
-        //inserção no banco de alunos que precisam ser aprovados pela adminstração
-        const insertCliente = async() => {
+        
+        //inserção no banco de clientes
+        const insertCliente = async () => {
+            console.log("Inserindo...")
             try {
                 const body = myJson;
                 const response = await fetch("http://localhost:5000/clientes", {
@@ -97,13 +96,49 @@ export default function Home() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 });
+                console.log(response)
+                /*
                 window.location = "/";
+                */
+                if (response.status === 200) {
+                    alert("Cadastro bem sucedido");
+                }
+
             } catch (err) {
-                console.error(err.message);
+                alert("Falha no cadastro");
             }
         }
 
-        insertCliente();
+
+        //verificar se registro já existe
+        const validarInsert = async () => {
+
+            try {
+                const response = await fetch("http://localhost:5000/clientes/" + myJson.cpfCliente,
+                    {
+                        method: "GET",
+                    }
+                );
+
+
+                var resJSON = await response.json();
+
+
+                if(resJSON.cpf === myJson.cpfCliente){
+                    alert("Já existe cliente com esse CPF");
+                }
+                else{
+                    insertCliente();
+                }
+
+            } catch (err) {
+                alert(err);
+            }
+
+        }
+
+        validarInsert();
+
     }
 
     return (

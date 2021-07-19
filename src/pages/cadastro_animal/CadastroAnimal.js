@@ -1,12 +1,10 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import validator from 'validator';
 
@@ -60,6 +58,7 @@ export default function Home() {
 
     function cadastrarAnimal(){
         console.log("Cadastrando...");
+        var tipoAnimal = tipo;
         var nomeAnimal = document.getElementById("nomeAnimal").value;
         var idadeAnimal = document.getElementById("idadeAnimal").value;
         var pesoAnimal = document.getElementById("pesoAnimal").value;
@@ -67,48 +66,48 @@ export default function Home() {
         var cpfDono = document.getElementById("cpfDono").value;
 
         //tratamentos
-        if(nomeAnimal == "" || idadeAnimal == "" || pesoAnimal == "" || racaAnimal ==""
-            || cpfDono == ""){
+        if(nomeAnimal === "" || idadeAnimal === "" || pesoAnimal === "" || racaAnimal ===""
+            || cpfDono === ""){
                 alert("Há campos incompletos");
                 return;
         };
 
-        if(validator.isAlpha(nomeAnimal) == false){
+        if(validator.isAlpha(nomeAnimal) === false){
             alert("nome do animal está mal formatado");
             return;
         }
 
-        if(validator.contains(idadeAnimal,".") == true){
+        if(validator.contains(idadeAnimal,".") === true){
             alert("idade do animal está mal formatado");
             return;
         }
 
-        if(validator.isNumeric(idadeAnimal) == false){
+        if(validator.isNumeric(idadeAnimal) === false){
             alert("idade do animal está mal formatado");
             return;
         }
 
-        if(validator.isNumeric(pesoAnimal) == false){
+        if(validator.isNumeric(pesoAnimal) === false){
             alert("peso do animal está mal formatado");
             return;
         }
 
-        if(validator.isAlpha(racaAnimal) == false){
+        if(validator.isAlpha(racaAnimal) === false){
             alert("raca do animal está mal formatado");
             return;
         }
 
-        if(validator.contains(cpfDono,".") == true){
+        if(validator.contains(cpfDono,".") === true){
             alert("cpf do dono está mal formatado");
             return;
         }
 
-        if(validator.isNumeric(cpfDono) == false){
+        if(validator.isNumeric(cpfDono) === false){
             alert("cpf do dono está mal formatado");
             return;
         }
 
-        if(cpfDono.length != 11){
+        if(cpfDono.length !== 11){
             alert("cpf do dono está mal formatado");
             return;
         }
@@ -118,6 +117,7 @@ export default function Home() {
         var myJson = {
             "nomeAnimal" : nomeAnimal,
             "idadeAnimal": idadeAnimal,
+            "tipoAnimal": tipoAnimal,
             "pesoAnimal": pesoAnimal,
             "racaAnimal": racaAnimal,
             "cpfDono": cpfDono
@@ -133,9 +133,14 @@ export default function Home() {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 });
-                window.location = "/";
+                //window.location = "/";
+                console.log(response);
+                if (response.status === 200) {
+                    alert("Cadastro bem sucedido");
+                }
+
             } catch (err) {
-                console.error(err.message);
+                alert("Falha no cadastro");
             }
         }
 

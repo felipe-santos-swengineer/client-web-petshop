@@ -52,7 +52,7 @@ export default function Home() {
 
 
         if (validator.isAlpha(nomeCliente.replace(" ", "")) === false) {
-            alert("nome do cliente está mal formatado");
+            alert("nome do cliente está mal formatado ou contem acentos");
             return;
         }
 
@@ -60,7 +60,6 @@ export default function Home() {
             alert("telefone está mal formatado");
             return;
         }
-
 
         if (validator.contains(cpfCliente, ".") === true) {
             alert("cpf do cliente está mal formatado");

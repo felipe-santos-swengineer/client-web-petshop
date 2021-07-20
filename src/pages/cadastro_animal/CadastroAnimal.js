@@ -65,17 +65,16 @@ export default function Home() {
         var racaAnimal = document.getElementById("racaAnimal").value;
         var cpfDono = document.getElementById("cpfDono").value;
 
+        cpfDono = cpfDono.replace(" ","");
+        idadeAnimal = idadeAnimal.replace(" ","");
+        pesoAnimal = pesoAnimal.replace(" ","");
+
         //tratamentos
         if(nomeAnimal === "" || idadeAnimal === "" || pesoAnimal === "" || racaAnimal ===""
             || cpfDono === ""){
                 alert("Há campos incompletos");
                 return;
         };
-
-        if(validator.isAlpha(nomeAnimal) === false){
-            alert("nome do animal está mal formatado");
-            return;
-        }
 
         if(validator.contains(idadeAnimal,".") === true){
             alert("idade do animal está mal formatado");
@@ -89,11 +88,6 @@ export default function Home() {
 
         if(validator.isNumeric(pesoAnimal) === false){
             alert("peso do animal está mal formatado");
-            return;
-        }
-
-        if(validator.isAlpha(racaAnimal) === false){
-            alert("raca do animal está mal formatado");
             return;
         }
 
@@ -111,7 +105,6 @@ export default function Home() {
             alert("cpf do dono está mal formatado");
             return;
         }
-
 
 
         var myJson = {
@@ -144,7 +137,35 @@ export default function Home() {
             }
         }
 
-        insertAnimal();
+
+        //verificar se registro já existe
+        const validarInsert = async () => {
+
+            try {
+                const response = await fetch("http://localhost:5000/clientes/" + myJson.cpfDono,
+                    {
+                        method: "GET",
+                    }
+                );
+
+
+                var resJSON = await response.json();
+
+
+                if(resJSON.cpf === myJson.cpfDono){
+                    insertAnimal();
+                }
+                else{
+                    alert("Não existe cliente com esse CPF");
+                }
+
+            } catch (err) {
+                alert(err);
+            }
+
+        }
+
+        validarInsert();
 
     }
 

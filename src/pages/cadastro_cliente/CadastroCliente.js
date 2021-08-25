@@ -1,12 +1,10 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import validator from 'validator';
+import NavBar from '../../components/NavBar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -142,22 +140,9 @@ export default function Home() {
 
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="/">PetShop</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav>
-                            <Nav.Link href="/cadastrarCliente">Cadastrar cliente</Nav.Link>
-                            <Nav.Link href="/cadastrarAnimal">Cadastrar animal</Nav.Link>
-                            <Nav.Link href="/manterClientes">Manter clientes</Nav.Link>
-                            <Nav.Link href="/manterAnimais">Manter animais</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <NavBar></NavBar>
             <div className={classes.root}>
-                <Paper elevation={10}>
+                <Paper elevation={10} style={{overflowX: "scroll", overflowY: "scroll"}}>
                     <form className={classes.root1} noValidate autoComplete="off">
                         <TextField
                             id="nomeCliente"

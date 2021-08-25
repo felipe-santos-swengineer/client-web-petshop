@@ -1,12 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
+import NavBar from "../../components/NavBar";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
-import validator from 'validator';
 
 
 function rand() {
@@ -79,7 +76,6 @@ export default function ManterAnimal() {
     const [tipo, setTipo] = React.useState('Cachorro');
     const [raca, setRaca] = useState();
     const [peso, setPeso] = useState();
-    const [cpfDono, setCpfDono] = useState();
     const [open, setOpen] = React.useState(false);
     const [editID, setEditID] = useState();
 
@@ -158,6 +154,7 @@ export default function ManterAnimal() {
                     body: JSON.stringify(body)
                 }
             );
+            console.log(response.json);
             alert("Animal Atualizado");
             handleClose();
             window.location = "/manterAnimais";
@@ -178,7 +175,7 @@ export default function ManterAnimal() {
             const deleteAnimal = await fetch(`http://localhost:5000/animais/` + deleteId, {
                 method: "DELETE"
             });
-
+            console.log(deleteAnimal.json);
             alert("Animal Deletado");
             window.location = "/manterAnimais";
         } catch (err) {
@@ -188,22 +185,9 @@ export default function ManterAnimal() {
 
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="/">PetShop</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav>
-                            <Nav.Link href="/cadastrarCliente">Cadastrar cliente</Nav.Link>
-                            <Nav.Link href="/cadastrarAnimal">Cadastrar animal</Nav.Link>
-                            <Nav.Link href="/manterClientes">Manter clientes</Nav.Link>
-                            <Nav.Link href="/manterAnimais">Manter animais</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <NavBar></NavBar>
             <div className={classes.root}>
-                <Paper elevation={10}>
+                <Paper elevation={10} style={{overflowX: "scroll", overflowY: "scroll"}}>
                     <h1 style={{ textAlign: "center", marginTop: "10px" }}>Animais</h1>
                     <Fragment>
                         {" "}
@@ -270,7 +254,7 @@ export default function ManterAnimal() {
                                                             multiline
                                                             variant="outlined"
                                                             value={peso}
-                                                            onChange={e => setIdade(e.target.value)}
+                                                            onChange={e => setPeso(e.target.value)}
                                                         />
                                                         <TextField
                                                             style={{ marginBottom: "10px", marginTop: "10px" }}

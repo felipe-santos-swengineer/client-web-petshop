@@ -24,6 +24,8 @@
     "dns": "^0.2.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "google-charts-node": "^1.0.4",
+    "react-google-charts": "^3.0.15",
     "googleapis": "^39.2.0",
     "js-cookie": "^2.2.1",
     "material-ui-popup-state": "^1.8.4",

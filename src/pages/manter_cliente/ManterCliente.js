@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
+import NavBar from "../../components/NavBar";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -145,6 +143,7 @@ export default function ManterCliente() {
                     body: JSON.stringify(body)
                 }
             );
+            console.log(response.json)
             alert("Cliente Atualizado");
             handleClose();
             window.location = "/manterClientes";
@@ -178,22 +177,9 @@ export default function ManterCliente() {
 
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="/">PetShop</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav>
-                            <Nav.Link href="/cadastrarCliente">Cadastrar cliente</Nav.Link>
-                            <Nav.Link href="/cadastrarAnimal">Cadastrar animal</Nav.Link>
-                            <Nav.Link href="/manterClientes">Manter clientes</Nav.Link>
-                            <Nav.Link href="/manterAnimais">Manter animais</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <NavBar></NavBar>
             <div className={classes.root}>
-                <Paper elevation={10}>
+                <Paper elevation={10} style={{overflowX: "scroll", overflowY: "scroll"}}>
                     <h1 style={{ textAlign: "center", marginTop: "10px" }}>Clientes</h1>
                     <Fragment>
                         {" "}

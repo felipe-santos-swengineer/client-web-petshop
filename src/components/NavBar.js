@@ -1,11 +1,14 @@
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+import Avatar from '@material-ui/core/Avatar';
+import Logo from "./logo.png";
 
 export default function NavBar(){
     return(
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
+                    <Avatar alt="Logo Petshop" src={Logo} />
                     <Navbar.Brand href="/">PetShop</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
